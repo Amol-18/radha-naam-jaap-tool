@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radha Naam Jap Tool</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #1a1a1a;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            background-image: url('https://www.transparenttextures.com/patterns/peacock-feather.png'); /* Peacock feather texture */
+            background-size: cover;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        body.light-mode {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            transition: background-color 0.3s;
+        }
+        body.light-mode .container {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        h1 {
+            color: #ffd700;
+            font-size: 3em;
+            font-family: 'Cinzel', serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: glow 2s infinite alternate;
+        }
+        body.light-mode h1 {
+            color: #ff6f61;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #ffd700; }
+            to { text-shadow: 0 0 20px #ff6f61; }
+        }
+        .quote {
+            font-style: italic;
+            color: #ffd700;
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+        body.light-mode .quote {
+            color: #ff6f61;
+        }
+        .counter {
+            font-size: 4em;
+            color: #ff6f61;
+            margin: 20px 0;
+            font-family: 'Arial', sans-serif;
+        }
+        button {
+            background-color: #ff6f61;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #ff3b2f;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+        .footer span {
+            font-size: 0.8em;
+            color: #888;
+        }
+        .timer {
+            font-size: 1.5em;
+            color: #ffd700;
+            margin: 20px 0;
+        }
+        body.light-mode .timer {
+            color: #ff6f61;
+        }
+        .feature-section {
+            margin-top: 30px;
+            text-align: left;
+            padding: 10px;
+            background-color: rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+        }
+        body.light-mode .feature-section {
+            background-color: rgba(255, 111, 97, 0.1);
+        }
+        .feature-section h3 {
+            color: #ffd700;
+            font-size: 1.5em;
+        }
+        body.light-mode .feature-section h3 {
+            color: #ff6f61;
+        }
+        .feature-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .feature-section li {
+            margin: 10px 0;
+            font-size: 1.1em;
+            color: #fff;
+        }
+        body.light-mode .feature-section li {
+            color: #333;
+        }
+        .goal-section {
+            margin-top: 20px;
+        }
+        .goal-section input {
+            padding: 5px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #ffd700;
+            background-color: rgba(255, 215, 0, 0.1);
+            color: #fff;
+        }
+        body.light-mode .goal-section input {
+            border-color: #ff6f61;
+            background-color: rgba(255, 111, 97, 0.1);
+            color: #333;
+        }
+        .progress-bar {
+            width: 100%;
+            background-color: rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        body.light-mode .progress-bar {
+            background-color: rgba(255, 111, 97, 0.1);
+        }
+        .progress-bar-fill {
+            height: 10px;
+            background-color: #ff6f61;
+            border-radius: 10px;
+            width: 0;
+            transition: width 0.5s ease;
+        }
+        .reward-message {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #ffd700;
+            display: none;
+        }
+        body.light-mode .reward-message {
+            color: #ff6f61;
+        }
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff6f61;
+            animation: confetti-fall 2s linear infinite;
+        }
+        @keyframes confetti-fall {
+            0% { transform: translateY(-10vh) rotate(0deg); }
+            100% { transform: translateY(110vh) rotate(720deg); }
+        }
+        .mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #ff6f61;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+        .streak-section {
+            margin-top: 20px;
+        }
+        .streak-section h3 {
+            color: #ffd700;
+            font-size: 1.5em;
+        }
+        body.light-mode .streak-section h3 {
+            color: #ff6f61;
+        }
+        .history-section {
+            margin-top: 20px;
+        }
+        .history-section h3 {
+            color: #ffd700;
+            font-size: 1.5em;
+        }
+        body.light-mode .history-section h3 {
+            color: #ff6f61;
+        }
+        .history-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .history-section li {
+            margin: 10px 0;
+            font-size: 1.1em;
+            color: #fff;
+        }
+        body.light-mode .history-section li {
+            color: #333;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <button class="mode-toggle" onclick="toggleMode()">🌙</button>
+    <div class="container">
+        <h1>Radha Naam Jap Tool</h1>
+        <div class="quote" id="quote">
+            "Chant the name of Radha and feel the divine love."
+        </div>
+        <div class="counter" id="counter">0</div>
+        <button onclick="chant()">Chant Radha</button>
+        <button onclick="resetCounter()">Reset</button>
+        <div class="timer" id="timer">00:00:00</div>
+        <button onclick="startTimer()">Start Timer</button>
+        <button onclick="stopTimer()">Stop Timer</button>
+
+        <div class="goal-section">
+            <h3>Set Daily Goal:</h3>
+            <input type="number" id="goalInput" placeholder="Enter your goal (e.g., 108)">
+            <button onclick="setGoal()">Set Goal</button>
+            <div class="progress-bar">
+                <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
+            <p id="goalStatus"></p>
+        </div>
+
+        <div class="streak-section">
+            <h3>📅 Daily Streak: <span id="streak">0</span> days</h3>
+        </div>
+
+        <div class="history-section">
+            <h3>📜 Chanting History:</h3>
+            <ul id="historyList"></ul>
+        </div>
+
+        <div class="reward-message" id="rewardMessage">
+            Congratulations! Radha-Krishna is pleased with your devotion. 🙏
+        </div>
+
+        <div class="feature-section">
+            <h3>Benefits of Chanting Radha's Name:</h3>
+            <ul>
+                <li>One step closer to Radha-Krishna's divine love.</li>
+                <li>Radha-Krishna hears every chant of your heart.</li>
+                <li>Chanting purifies the mind and soul.</li>
+                <li>Brings peace, happiness, and spiritual growth.</li>
+                <li>Connects you to the eternal love of Radha and Krishna.</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            Keep chanting and stay blessed! 🙏<br>
+            <span>Created by Amol Katke</span>
+        </div>
+    </div>
+
+    <!-- Confetti Animation -->
+    <div class="confetti" id="confetti"></div>
+
+    <script>
+        let count = 0;
+        let timerInterval;
+        let seconds = 0, minutes = 0, hours = 0;
+        let dailyGoal = 0;
+        let streak = 0;
+        let history = [];
+
+        const quotes = [
+            "Chant the name of Radha and feel the divine love.",
+            "Radha's name brings peace and happiness.",
+            "Let the divine energy of Radha fill your heart.",
+            "Every chant of Radha's name brings you closer to the divine.",
+            "Radha's love is eternal and pure.",
+            "Chanting Radha's name is a step towards spiritual bliss.",
+            "Radha-Krishna hears every chant of your heart.",
+            "Feel the divine presence with every chant of Radha."
+        ];
+
+        const gitaQuotes = [
+            "You have the right to work, but never to the fruit of work. - Bhagavad Gita 2.47",
+            "The soul is neither born, nor does it ever die. - Bhagavad Gita 2.20",
+            "Set your heart upon your work, but never on its reward. - Bhagavad Gita 2.47",
+            "The self-controlled soul, who moves amongst sense objects, free from attachment and aversion, attains peace. - Bhagavad Gita 2.64",
+            "When meditation is mastered, the mind is unwavering like the flame of a lamp in a windless place. - Bhagavad Gita 6.19"
+        ];
+
+        function chant() {
+            count++;
+            document.getElementById('counter').innerText = count;
+            if (count % 10 === 0) {
+                const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+                document.getElementById('quote').innerText = randomQuote;
+            }
+            updateProgress();
+        }
+
+        function resetCounter() {
+            count = 0;
+            document.getElementById('counter').innerText = count;
+            document.getElementById('quote').innerText = quotes[0];
+            updateProgress();
+        }
+
+        function startTimer() {
+            if (timerInterval) return;
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+
+        function updateTimer() {
+            seconds++;
+            if (seconds === 60) {
+                seconds = 0;
+                minutes++;
+            }
+            if (minutes === 60) {
+                minutes = 0;
+                hours++;
+            }
+            const timer = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+            document.getElementById('timer').innerText = timer;
+        }
+
+        function pad(value) {
+            return value < 10 ? `0${value}` : value;
+        }
+
+        function setGoal() {
+            dailyGoal = parseInt(document.getElementById('goalInput').value);
+            if (dailyGoal > 0) {
+                document.getElementById('goalStatus').innerText = `Goal: ${dailyGoal} chants`;
+                updateProgress();
+            }
+        }
+
+        function updateProgress() {
+            if (dailyGoal > 0) {
+                const progress = (count / dailyGoal) * 100;
+                document.getElementById('progressBar').style.width = `${progress}%`;
+                if (count >= dailyGoal) {
+                    document.getElementById('goalStatus').innerText = "Goal achieved! 🙌";
+                    document.getElementById('rewardMessage').style.display = "block";
+                    createConfetti();
+                    updateStreak();
+                    addToHistory();
+                }
+            }
+        }
+
+        function createConfetti() {
+            const confettiContainer = document.getElementById('confetti');
+            for (let i = 0; i < 100; i++) {
+                const confettiPiece = document.createElement('div');
+                confettiPiece.classList.add('confetti-piece');
+                confettiPiece.style.left = `${Math.random() * 100}vw`;
+                confettiPiece.style.animationDelay = `${Math.random()}s`;
+                confettiContainer.appendChild(confettiPiece);
+            }
+        }
+
+        function updateStreak() {
+            streak++;
+            document.getElementById('streak').innerText = streak;
+        }
+
+        function addToHistory() {
+            const date = new Date().toLocaleDateString();
+            history.push({ date, count });
+            const historyList = document.getElementById('historyList');
+            historyList.innerHTML = history.map(entry => `<li>${entry.date}: ${entry.count} chants</li>`).join('');
+        }
+
+        function toggleMode() {
+            document.body.classList.toggle('light-mode');
+            const modeToggle = document.querySelector('.mode-toggle');
+            modeToggle.innerText = document.body.classList.contains('light-mode') ? '🌞' : '🌙';
+        }
+
+        function shareOnWhatsApp() {
+            const message = `I just completed ${count} chants of Radha's name! 🙏\nKeep chanting and stay blessed! 🌸`;
+            const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+
+        function showGitaQuote() {
+            const randomGitaQuote = gitaQuotes[Math.floor(Math.random() * gitaQuotes.length)];
+            document.getElementById('quote').innerText = randomGitaQuote;
+        }
+
+        // Load saved progress from local storage
+        window.onload = () => {
+            if (localStorage.getItem('count')) {
+                count = parseInt(localStorage.getItem('count'));
+                document.getElementById('counter').innerText = count;
+            }
+            if (localStorage.getItem('dailyGoal')) {
+                dailyGoal = parseInt(localStorage.getItem('dailyGoal'));
+                document.getElementById('goalInput').value = dailyGoal;
+                document.getElementById('goalStatus').innerText = `Goal: ${dailyGoal} chants`;
+                updateProgress();
+            }
+            if (localStorage.getItem('streak')) {
+                streak = parseInt(localStorage.getItem('streak'));
+                document.getElementById('streak').innerText = streak;
+            }
+            if (localStorage.getItem('history')) {
+                history = JSON.parse(localStorage.getItem('history'));
+                const historyList = document.getElementById('historyList');
+                historyList.innerHTML = history.map(entry => `<li>${entry.date}: ${entry.count} chants</li>`).join('');
+            }
+        };
+
+        // Save progress to local storage
+        window.onbeforeunload = () => {
+            localStorage.setItem('count', count);
+            localStorage.setItem('dailyGoal', dailyGoal);
+            localStorage.setItem('streak', streak);
+            localStorage.setItem('history', JSON.stringify(history));
+        };
+    </script>
+</body>
+</html>
